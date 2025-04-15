@@ -1,0 +1,148 @@
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');  
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display&display=swap');  
+
+
+body {
+  font-family: 'Noto Sans Display', sans-serif !important;
+  line-height: 1.6 !important;
+  color: #333 !important;
+  background-color: #fff !important;
+  margin: 0;
+  padding: 0;
+}
+
+em {
+  font-size: 90%; 
+  font-family: 'VT323', monospace !important;
+  font-style: normal;
+  color: #444; 
+}
+
+strong {
+  font-weight: 600;
+  font-size: 100%; 
+  font-family: 'Noto Sans Display', sans-serif !important;
+}
+
+blockquote {
+  margin-bottom: 0 !important;
+}
+
+
+.main-container h1.title {
+  font-family: 'VT323', monospace, sans-serif !important;
+  font-size: 54px !important;
+  color: #111 !important;
+  padding: 20px 0 !important;
+  margin: 0 !important;
+  margin-bottom: 10px
+  letter-spacing: -1px; 
+}
+
+
+.main-container h1,
+.main-container h2,
+.main-container h3,
+.main-container h4 {
+  font-family: 'VT323', monospace, sans-serif !important;
+  color: #111 !important;
+  margin: 40px 0 20px !important;
+  line-height: 1.2 !important;
+}
+
+.main-container h1 {
+  font-size: 40px !important;
+  border-bottom: 1px solid #eee !important;
+  padding-bottom: 10px !important;
+}
+
+.main-container h2 {
+  font-size: 32px !important;
+  color: #2a61cc !important; 
+}
+
+.main-container h3 {
+  font-size: 26px !important;
+  color: #2a61cc !important;  
+}
+
+
+.main-container p {
+  font-family: 'Noto Sans Display', sans-serif !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  color: #333 !important;
+  margin-bottom: 24px !important;
+}
+
+
+#TOC {
+  background-color: transparent !important;
+  border-right: none !important;
+  padding: 20px !important;
+  width: 250px !important;
+}
+
+#TOC a {
+  color: red !important;
+  text-decoration: none !important;
+  font-family: 'VT323', monospace !important;
+  font-size: 16px !important; 
+}
+
+#TOC a:hover {
+  color: darkred !important;
+}
+
+#TOC ul {
+  list-style-type: none !important;
+  padding-left: 0 !important;
+}
+
+#TOC li {
+  margin-bottom: 12px !important;  
+}
+
+
+@media (max-width: 1000px) {
+  #TOC {
+    position: relative !important;
+    width: 100% !important;
+    border-bottom: 2px solid #ddd !important;  
+  }
+  
+  .main-container {
+    padding: 20px !important;
+    margin-left: 0 !important;
+  }
+}
+
+
+img {
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 20px 0 !important;
+  border: 1px solid #eee !important;
+  border-radius: 4px !important;  
+}
+
+blockquote {
+  font-style: italic !important;
+  font-size: 19px !important;
+  border-left: 3px solid #2a61cc !important;
+  padding: 15px 25px !important;
+  margin: 30px 0 !important;
+  background-color: #f8f9fa !important;
+  margin-top: 0.5em;!important
+  margin-bottom: 0.5em; !important
+}
+
+
+.loading-font {
+  visibility: hidden;
+}
+
+.font-loaded .loading-font {
+  visibility: visible;
+}
