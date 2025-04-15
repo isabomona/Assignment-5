@@ -1,0 +1,294 @@
+---
+title: ""
+description: "A data-driven analysis exploring the roots of Europe’s growing AI anxiety, showing how laws, economics, trust, and everyday life all shape how people feel about a future increasingly driven by machines."
+author: "Group 9 | Rong Wang; Jiexi Tan; Isabel Cruz Sansegundo"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    css: style.css
+    toc: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: true
+    code_folding: hide
+    theme: simple
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE)
+```
+<h1>The Day the Code Crossed the Line</h1>
+<h3 style="margin-top:-10px;">The story of how AI turned from Europe’s promise to its problem</h3>
+
+>Public fascination with AI has quickly given way to rising unease. All across Europe, what once symbolized progress now creates concern. As governments try to regulate, citizens are left wondering: Is AI being tamed, or simply exposed? 
+
+![](images/Title.jpeg)
+This article explores the roots of Europe’s growing AI anxiety, showing how laws, economics, trust, and everyday life all shape how people feel about a future increasingly driven by machines.
+
+## The Call to Action: The Rise of AI Anxiety
+
+It was in 2020 when families began receiving unexpected visits from government officials in the low-income neighborhoods across the Netherlands. They were being [accused of welfare fraud](https://www.theguardian.com/technology/2020/feb/05/welfare-surveillance-system-violates-human-rights-dutch-court-rules), not by any person or authority, but by an algorithm called SyRI. 
+
+This AI-based technology, designed to find instances of tax fraud amongst others, started flagging immigrants and working-class residents. As it became apparent that there was no human review or transparency behind this system, the population became outraged. What was meant to be a tool for justice had become a symbol of digital discrimination.
+
+This is one of the many instances where AI technologies have caused public concern across Europe. After the AI boom, in 2020, there has been a rise of anxiety amongst the population, who saw the dangers of these technologies but no legislation passed to keep them safe. The [2020 Eurobarometer](https://ec.europa.eu/commission/presscorner/detail/en/ip_20_383) survey found that 51% of the respondents consider it necessary to create public policy around AI. 
+
+## Crossing the Threshold: The EU AI Act
+
+With the precedent that the European General Data Protection Regulation (GDPR) had set, laying the foundation for digital rights, the EU started working towards a common legislation to regulate AI in 2021. 
+
+As a result, in March of 2024, The European Parliament officially passed the AI Act with a strong majority. This was the first step for many countries to pass their own protection laws against AI. Stanford University’s [2024 AI Index Report](https://hai.stanford.edu/ai-index/2024-ai-index-report) pointed out that there were 25 AI-related regulations in the US (up from just one in 2016). In 2024 alone, the number of new laws surged by 56.3%. Apparently, not just in Europe, regulating AI has become a global trend.
+
+```{r interactive-plot, echo=FALSE}
+library(plotly)
+source("Mapa final.R")
+plot <- plot %>%
+  add_trace(
+    data = map_2021,
+    type = "scattergeo",
+    locations = ~name,
+    locationmode = "country names",
+    text = ~paste0(
+      "<b>Country:</b> ", name, "<br>",
+      "Positive effect (2021): ", round(positive_effect, 2), "<br>",
+      "Law number (2024): ", law_2024
+    ),
+    hoverinfo = "text",
+    marker = list(
+      size = map_2021$dot_size,
+      color = map_2021$positive_effect,
+      colorscale = "Blues",
+      cmin = min(map_long$positive_effect, na.rm = TRUE),
+      cmax = max(map_long$positive_effect, na.rm = TRUE),
+      colorbar = list(title = "Positive Effect"),
+      line = list(width = 0.5, color = "white")
+    ),
+    name = "Law number",
+    visible = TRUE
+  )
+
+# Add 2024 plot
+plot <- plot %>%
+  add_trace(
+    data = map_2024,
+    type = "scattergeo",
+    locations = ~name,
+    locationmode = "country names",
+    text = ~paste0(
+      "<b>Country:</b> ", name, "<br>",
+      "Positive effect (2024): ", round(positive_effect, 2), "<br>",
+      "Law number (2024): ", law_2024
+    ),
+    hoverinfo = "text",
+    marker = list(
+      size = map_2024$dot_size,
+      color = map_2024$positive_effect,
+      colorscale = "Blues",
+      cmin = min(map_long$positive_effect, na.rm = TRUE),
+      cmax = max(map_long$positive_effect, na.rm = TRUE),
+      colorbar = list(title = "Positive Effect"),
+      line = list(width = 0.5, color = "white")
+    ),
+    name = "Law number",
+    visible = FALSE
+  )
+
+# Change between between 2021 and 2024
+plot <- plot %>%
+  layout(
+    title = "Positive Effect in Europe<br>Dot Size ∝ Law Number (2024)",
+    geo = list(
+      scope = 'europe',
+      showframe = FALSE,
+      showcoastlines = TRUE
+    ),
+    legend = list(
+      x = 0.03,         # Left-right position (0 = far left, 1 = far right)
+      y = 0.9,         # Top-bottom position (0 = bottom, 1 = top)
+      xanchor = "left",
+      yanchor = "middle")  
+    ,
+    updatemenus = list(
+      list(
+        type = "dropdown",
+        direction = "down",
+        buttons = list(
+          list(method = "restyle",
+               args = list("visible", list(TRUE, FALSE)),
+               label = "2021"),
+          list(method = "restyle",
+               args = list("visible", list(FALSE, TRUE)),
+               label = "2024")
+        ),
+        x = 0.1,
+        y = 1.2
+      )
+    )
+  )
+
+plot
+
+```
+*Figure 1. A map of Europe showing attitudes toward AI in 2021 and 2024, and the number of national AI laws passed by 2024.*
+
+In just three years, public sentiment toward AI has taken a noticeable dip. The map paints a clear picture: what once sparked curiosity in 2021 now creates skepticism in 2024. 
+
+Is this a coincidence or a consequence? As lawmakers continue to regulate AI, it begs the question: are these rules reassuring the public, or quietly fueling distrust? Is the very act of regulating AI making people fear it more, or are there other factors at work? 
+
+This article will begin focusing on external factors that may affect this trend.
+
+## More Than the Law: What Else Shapes Public Attitudes?
+
+Laws matter — but they never act alone. While policymakers debate the future of AI in parliaments and policy papers, public opinion is also quietly shaped by everyday conditions. Public attitudes toward AI across Europe are influenced by a patchwork of economic, demographic, and political conditions.
+
+This model controls four key variables: GDP per capita, elderly population, trust in government, and government efficiency. Each variable tells a story about how public attitudes take shape. So what do those factors look like on the ground? 
+
+### Economic Divides: Prosperity and Optimism
+
+Despite recent recovery, Spain and Portugal still lag behind their higher-income neighbors in GDP per capita. To boost economic competitiveness and drive industrial modernization, these countries are turning to AI regulations. The push for AI legislation aims to foster technological innovation while supporting the transformation of low-skilled labor. On the road to recovery, the positive attitude of the people of Spain and Portugal towards AI exceeds the EU27 average.
+
+### The Weight of Age
+
+Ageing countries like Italy and Greece tend to show more caution towards new technologies. This doesn’t always stem from fear, but from a different set of values. In the UK, government surveys show older generations are especially concerned about AI safety.
+
+### Trust Makes the Difference
+
+In Denmark, where trust in government runs high, the public conversation about AI feels calm — and constructive. The country’s national AI strategy emphasizes transparency and a human-centered approach to technology.
+
+“Artificial intelligence in Denmark must be rooted in shared ethical values and always put people first,” said [researchers from the National Center for Artificial Intelligence in Society](https://politiken.dk/debat/kroniken/art10343688/Vi-st%C3%A5r-over-for-en-teknologisk-revolution-og-Danmark-kan-vise-vejen). 
+
+“That principle is not just symbolic — it helps explain why the Danish public tends to embrace AI initiatives with more confidence.”
+
+That kind of trust doesn’t just help — it cushions the rollout of AI.
+
+### When Efficiency Feels Personal
+
+Efficient government matters. When citizens perceive their government's regulatory processes as transparent, timely, and well-executed, they tend to trust AI more. Austria, with relatively efficient governance, moved fast to align its laws with the EU AI Act. The country's efficient decision-making process has led to the introduction of regulations that mandate transparency and accountability in AI systems. 
+
+Yet here’s the twist: public support for AI in Austria is falling. Compared to Denmark, something’s off — and it’s not the efficiency. Beyond these conditions, legislation itself still plays a role — one our data begins to uncover.
+
+## Searching for Clarity: Do AI Laws Change Minds?
+
+Many forces shape public perception as discussed above. But one rising influence stands out—AI legislation. As artificial intelligence has boomed, so have the laws trying to contain it.
+
+But what do these laws mean for the people who live under them?
+
+[A study by researchers at Cornell University](https://arxiv.org/abs/2308.09979) surveyed 4,006 citizens across eight European nations (France, Germany, Italy, Netherlands, Poland, Romanian, Spain, and Sweden), and 76% said it was important or very important for national authorities to enforce ethical standards and social responsibility in AI use. [Anita Schjøll Abildgaard](https://www.ft.com/content/a02adae5-5f85-4bf5-a2f7-b23b1bc03767), co-founder of the AI firm Iris.ai in Norway, mentioned that when citizens trust that AI development follows ethical principles and meaningful oversight, they embrace its integration more readily.
+
+Both the public and industry appear to support AI legislation, but what happens when those laws take effect? Do they change how people feel about AI?
+
+To explore this, 34 European countries have been grouped into two sets: those with national-level AI laws between 2021 and 2024 (the treatment group, 19 countries), and those without (the control group, 15 countries).
+
+The study looked at changes in public positive attitudes toward AI, controlling for the factors of GDP per capita, elderly population, trust in government, and government efficiency.
+
+```{r ggplot-static, echo=FALSE}
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(writexl)
+library(tidyverse)
+library(ggplot2)
+library(ggrepel)
+library(broom)
+library(modelsummary) 
+library(sjPlot)
+library(showtext)
+source("assignment 2.R")
+font_add(family = "noto", regular = "NotoSansDisplay-Regular.ttf")
+font_add_google(name = "Noto Sans Display", family = "noto")
+showtext_auto()
+
+ggplot(pred.data, aes(x = factor(pre_post), y = attitude_pred, group = factor(treated), color = factor(treated))) +
+  geom_line(linewidth = 1) + 
+  geom_point(size = 6) + 
+  
+  # Add predicted counterfactual line for treatment group
+  geom_line(data = subset(pred.data, treated == 1),
+            aes(y = attitude_pred_counterfactual, group = treated, linetype = "Counterfactual"),
+            color = "#EC7E7E", linewidth = 1.2) +
+  
+  # Dotted bracket showing DiD effect in 2024
+  geom_segment(data = subset(pred.data, treated == 1 & pre_post == 1), 
+               aes(x = 2.05, xend = 2.05,
+                   y = attitude_pred_counterfactual, 
+                   yend = attitude_pred),
+               color = "#EC7E7E", linetype = "dotted", linewidth = 1) +
+  geom_segment(aes(x = 2.01, xend = 2.09,
+                   y = attitude_pred_counterfactual, 
+                   yend = attitude_pred_counterfactual),
+               data = subset(pred.data, treated == 1 & pre_post == 1),
+               color = "#EC7E7E", linewidth = 0.8) +
+  geom_segment(aes(x = 2.01, xend = 2.09,
+                   y = attitude_pred, 
+                   yend = attitude_pred),
+               data = subset(pred.data, treated == 1 & pre_post == 1),
+               color = "#EC7E7E", linewidth = 0.8) +
+  
+  # Label for the DiD effect
+  geom_label(data = subset(pred.data, treated == 1 & pre_post == 1),
+             aes(x = 2.11,
+                 y = (attitude_pred + attitude_pred_counterfactual) / 2,
+                 label = paste("Effect =", round(DiD_effect, 2))),
+             fill = "#E6F4FF", color = "#EC7E7E", fontface = "bold", 
+             size = 4, hjust = 0.5, label.size = NA) +
+  
+  # Labels and formatting
+  labs(title = "Impact of AI Legislation on Public Attitudes", 
+       x = "", 
+       y = "Positive Attitude Towards AI (%)", color = "treated",
+       caption = "Data: Special Eurobarometer 2021-2024, World Bank, Eurostat and IMF\nNote: Controlled for demographic, economic, and institutional variables",
+       subtitle = "Difference-in-Differences Analysis with Counterfactual Scenario") +
+  
+  scale_x_discrete(breaks = c(0, 1), labels = c("2021", "2024"), expand = expansion(mult = 0.2)) +
+  scale_y_continuous(breaks = seq(10, 80, by = 1)) +
+  scale_color_manual(labels = c("Control", "Treatment"), values = c("#077BE1", "#B23030")) +
+  scale_linetype_manual(values = c("Counterfactual" = "dashed")) +
+  
+  # Theme and layout
+  theme_minimal() +
+  theme(plot.background = element_rect(color = NA, fill = NA),
+        plot.margin = margin(t = 30, r = 80, b = 25, l = 30),
+    text = element_text(family = "noto"),
+    plot.title = element_text(hjust = 0, face = "bold", size = 18, family = "noto", margin = margin(b = 5)),
+    plot.subtitle = element_text(hjust = 0, size = 14, family = "noto", margin = margin(b = 25)),
+    plot.caption = element_text(hjust = 0, size = 10, color = "grey45", family = "noto"), 
+    legend.title = element_blank(), 
+    legend.position = c(1, 1),
+    legend.justification = c("right", "top"),
+    axis.text = element_text(color = "black", family = "noto"),
+    axis.title.y = element_text(size = 13, hjust = 0.5, margin = margin(t = 0, r = 10, b = 0, l = 0), family = "noto"),
+    axis.text.y = element_text(face = "bold", size = 12, margin = margin(r = 10), family = "noto"),
+    axis.title.x = element_text(size = 13, hjust = 0.5, margin = margin(t = 15), family = "noto"),
+    axis.text.x = element_text(face = "bold", size = 12, margin = margin(r = 10), family = "noto")
+  )+
+  
+  # Prevent label clipping
+  coord_cartesian(clip = "off")
+```
+
+*Figure 2. The trends of treatment group and control group with counterfactual scenarios.*
+
+Interestingly, the treatment group started with higher levels of positive attitudes in 2021 but saw a sharper drop than the control group, with an additional decline of 3.08 points. In other words, regulation may be linked with more skepticism among the public.
+
+At the same time, the control group also experienced a noticeable decline, suggesting other factors—unobserved or uncontrolled—may be driving public concerns on AI. 
+
+Although the sample size of the study is small, these findings remain limited and do not strongly prove causality. But they do point out a new direction: Legislation may not always boost trust. In some cases, it may do the opposite.
+
+## Conclusions: Legislation ≠ Trust
+
+What is clear is that public opinion and AI policy are now deeply intertwined. This study offers a glimpse, not the full picture. 
+
+To truly grasp the relationship between legislation and public trust in AI, we must widen the lens. That lens may stretch beyond what has been discussed here—into areas like media framing, education levels, cultural attitudes, political stances, digital literacy, or more. 
+
+To understand how regulations shape views on AI, we need to look harder, look wider. 
+
+In an age driven by machines, laws to contain them are inevitable. The laws will help shape the future of AI ——
+
+but just as importantly, how people feel about those laws will be among the key factors shaping whether this future is welcomed or feared.
+
+
+
+---
+
+*Authors: Group 9 — Rong Wang; Jiexi Tan; Isabel Cruz Sansegundo*
